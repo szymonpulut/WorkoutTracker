@@ -2,7 +2,7 @@
 
 ## Description
 
-A workout tracking app that I designed and built from scratch completely on my own. Its purpose is to log workouts. After creating a routine, it is very easy to log exercises and modify them on the fly. Features very clear interface, stores data offline on localStorage. It is a MVP version still - there is a lot of work to do.
+A workout tracking mobile-first app that I designed and built from scratch completely on my own. Its purpose is to log workouts. After creating a routine, it is very easy to log exercises and modify them on the fly. Features very clear interface, stores data offline on localStorage. It is a MVP version still - there is a lot of work to do.
 
 ## Quick overview
 
