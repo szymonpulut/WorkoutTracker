@@ -19,6 +19,7 @@ import {
     DialogContent,
     DialogTitle,
 } from '@material-ui/core';
+import ConfirmRemoveDialog from 'components/ConfirmRemoveDialog/ConfirmRemoveDialog';
 
 const styles = (theme: Theme): ReturnType<typeof createStyles> =>
     createStyles({
@@ -161,6 +162,11 @@ const ExerciseDialog: React.FC<IProps> = ({
         }
     };
 
+    const [
+        confirmRemoveExerciseDialog,
+        setConfirmRemoveExerciseDialog,
+    ] = React.useState(false);
+
     const handleExerciseRemove = (): void => {
         onRemoveExercise(day, formData.id);
         handleClose(false);
@@ -186,7 +192,7 @@ const ExerciseDialog: React.FC<IProps> = ({
         <Button
             className={classes.RemoveButton}
             onClick={(): void => {
-                handleExerciseRemove();
+                setConfirmRemoveExerciseDialog(true);
             }}
         >
             Remove
@@ -195,6 +201,16 @@ const ExerciseDialog: React.FC<IProps> = ({
 
     return (
         <div>
+            <ConfirmRemoveDialog
+                isOpen={confirmRemoveExerciseDialog}
+                setOpen={(value): void => {
+                    setConfirmRemoveExerciseDialog(value);
+                }}
+                handleRemove={(): void => {
+                    handleExerciseRemove();
+                }}
+                removedType="exercise"
+            />
             <Dialog
                 open={dialogOpen}
                 onClose={(): void => {
