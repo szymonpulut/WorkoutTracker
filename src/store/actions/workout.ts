@@ -53,8 +53,9 @@ export const addDay = (): actionTypes.AppActions => {
     };
 };
 
-export const removeDay = (): actionTypes.AppActions => {
+export const removeDay = (day: number): actionTypes.AppActions => {
     return {
         type: actionTypes.REMOVE_DAY,
+        day,
     };
 };

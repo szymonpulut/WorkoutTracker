@@ -61,6 +61,7 @@ export interface AddDayAction {
 
 export interface RemoveDayAction {
     type: typeof REMOVE_DAY;
+    day: number;
 }
 
 export type ExerciseActionTypes =

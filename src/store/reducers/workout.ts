@@ -53,7 +53,26 @@ const removeDay = (
     state: typeof initialState,
     action: actionTypes.RemoveDayAction,
 ): typeof initialState => {
-    return updateObject(state, { ...state, daysCount: state.daysCount - 1 });
+    const daysCopy = { ...state.days };
+    const newDays: IWorkoutRoutine = {};
+
+    /* eslint-disable no-restricted-syntax */
+    for (const day of Object.values(daysCopy)) {
+        let dayNumber = day.day;
+        if (dayNumber !== action.day) {
+            if (dayNumber > action.day) dayNumber -= 1;
+            newDays[dayNumber] = day;
+            newDays[dayNumber].day = dayNumber;
+        }
+    }
+    /* eslint-enable no-restricted-syntax */
+
+    const newState = Object.assign(state, {
+        daysCount: state.daysCount - 1,
+        days: newDays,
+    });
+
+    return newState;
 };
 
 const addNewExercise = (

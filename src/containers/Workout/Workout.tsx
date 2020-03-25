@@ -1,6 +1,8 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { IconButton } from '@material-ui/core';
 
 import { IWorkoutRoutine } from 'types/WorkoutRoutine';
 import { AppState } from 'store/configureStore';
@@ -8,6 +10,7 @@ import { AppActions } from 'types/actions';
 import * as actions from 'store/actions';
 
 import Tier from 'components/Tier/Tier';
+import ConfirmRemoveDialog from 'components/ConfirmRemoveDialog/ConfirmRemoveDialog';
 import ExerciseDialog from 'containers/ExerciseDialog/ExerciseDialog';
 
 import styles from './Workout.module.scss';
@@ -21,6 +24,7 @@ interface IMapStateToProps {
 interface IMapDispatchToProps {
     onInitDayOne: () => void;
     onChangeDay: (day: number) => void;
+    onRemoveDay: (day: number) => void;
 }
 
 interface IProps extends IMapStateToProps, IMapDispatchToProps {}
@@ -31,6 +35,7 @@ const Workout: React.FC<IProps> = ({
     daysCount,
     onInitDayOne,
     onChangeDay,
+    onRemoveDay,
 }: IProps) => {
     // Initialise day 1 if array is empty or undefined - on first launch
     React.useEffect(() => {
@@ -42,9 +47,36 @@ const Workout: React.FC<IProps> = ({
 
     const currentDayRoutine = days[day];
 
+    const [showRemoveDayDialog, setShowRemoveDayDialog] = React.useState(false);
+
+    const handleRemoveDay = (): void => {
+        let onlyOneDay = false;
+        if (daysCount <= 1) onlyOneDay = true;
+
+        let newDay = 0;
+        if (!onlyOneDay) {
+            if (day - 1 > 0) newDay = day - 1;
+            else newDay = day;
+        } else {
+            newDay = 1;
+            onInitDayOne();
+        }
+
+        onRemoveDay(day);
+        onChangeDay(newDay);
+    };
     return (
         <div className={styles.Workout}>
+            <ConfirmRemoveDialog
+                isOpen={showRemoveDayDialog}
+                setOpen={(value): void => {
+                    setShowRemoveDayDialog(value);
+                }}
+                handleRemove={handleRemoveDay}
+                removedType="day"
+            />
             <ExerciseDialog day={day} />
+
             <Tier
                 day={day}
                 tierNumber={1}
@@ -61,6 +93,17 @@ const Workout: React.FC<IProps> = ({
                 exercises={currentDayRoutine?.exercises}
             />
             <h3>Additional: </h3>
+            <div style={{ flexGrow: 1 }} />
+            <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={(): void => {
+                    setShowRemoveDayDialog(true);
+                }}
+            >
+                <DeleteIcon color="primary" />
+            </IconButton>
         </div>
     );
 };
@@ -82,6 +125,9 @@ const mapDispatchToProps = (
         },
         onChangeDay: (day: number): void => {
             dispatch(actions.changeDay(day));
+        },
+        onRemoveDay: (day: number): void => {
+            dispatch(actions.removeDay(day));
         },
     };
 };
