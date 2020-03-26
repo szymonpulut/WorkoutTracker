@@ -1,5 +1,4 @@
 import * as actionTypes from 'types/actions';
-import { updateObject } from 'shared/utility';
 import { IExercise, IWorkoutRoutine } from 'types/WorkoutRoutine';
 
 export interface IWorkoutState {
@@ -14,10 +13,7 @@ const changeDay = (
     state: typeof initialState,
     action: actionTypes.ChangeDayAction,
 ): typeof initialState => {
-    const newState = updateObject<typeof initialState>(state, {
-        ...state,
-        day: action.day,
-    });
+    const newState = { ...state, day: action.day };
 
     return newState;
 };
@@ -27,7 +23,7 @@ const addDay = (
     action: actionTypes.AddDayAction,
 ): typeof initialState => {
     const newDaysCount = state.daysCount + 1;
-    const newDaysArray = {
+    const newDays = {
         ...state.days,
         [newDaysCount]: {
             id: 9,
@@ -35,11 +31,10 @@ const addDay = (
             exercises: [],
         },
     };
-    return updateObject(state, {
-        ...state,
-        daysCount: newDaysCount,
-        days: newDaysArray,
-    });
+
+    const newState = { ...state, daysCount: newDaysCount, days: newDays };
+
+    return newState;
 };
 const initDayOne = (
     state: typeof initialState,
@@ -53,11 +48,10 @@ const removeDay = (
     state: typeof initialState,
     action: actionTypes.RemoveDayAction,
 ): typeof initialState => {
-    const daysCopy = { ...state.days };
     const newDays: IWorkoutRoutine = {};
 
     /* eslint-disable no-restricted-syntax */
-    for (const day of Object.values(daysCopy)) {
+    for (const day of Object.values(state.days)) {
         let dayNumber = day.day;
         if (dayNumber !== action.day) {
             if (dayNumber > action.day) dayNumber -= 1;
@@ -67,10 +61,11 @@ const removeDay = (
     }
     /* eslint-enable no-restricted-syntax */
 
-    const newState = Object.assign(state, {
+    const newState = {
+        ...state,
         daysCount: state.daysCount - 1,
         days: newDays,
-    });
+    };
 
     return newState;
 };
@@ -80,60 +75,41 @@ const addNewExercise = (
     action: actionTypes.AddNewExerciseAction,
 ): typeof initialState => {
     let newExercises: IExercise[];
-    const exerciseId = state?.days[action.day]?.exercises?.findIndex(
-        (exercise) => {
-            return exercise.id === action.exercise.id;
-        },
-    );
+    const day = state.days[action.day];
+    const exerciseId = day.exercises.findIndex((exercise) => {
+        return exercise.id === action.exercise.id;
+    });
 
     if (exerciseId !== -1) {
         newExercises = [
-            ...state?.days[action.day]?.exercises?.slice(0, exerciseId),
+            ...day.exercises.slice(0, exerciseId),
             action.exercise,
-            ...state?.days[action.day]?.exercises?.slice(exerciseId + 1),
+            ...day.exercises.slice(exerciseId + 1),
         ];
     } else {
-        newExercises = state?.days[action.day]?.exercises?.concat([
-            action.exercise,
-        ]);
+        newExercises = day.exercises.concat([action.exercise]);
     }
 
-    return {
-        ...state,
-        days: {
-            ...state.days,
-            [action.day]: {
-                ...state.days[action.day],
-                exercises: newExercises,
-            },
-        },
-    };
+    const newDay = { ...day, exercises: newExercises };
+    const newDays = { ...state.days, [action.day]: newDay };
+    const newState = { ...state, days: newDays };
+
+    return newState;
 };
 
 const removeExercise = (
     state: typeof initialState,
     action: actionTypes.RemoveExerciseAction,
 ): typeof initialState => {
-    const newExercises = state.days[action.day].exercises.filter((element) => {
+    const day = state.days[action.day];
+
+    const newExercises = day.exercises.filter((element) => {
         return element.id !== action.id;
     });
 
-    const d = state.days[action.day];
-
-    const newDay = updateObject<typeof d>(d, {
-        ...d,
-        exercises: [...newExercises],
-    });
-
-    const newDays = updateObject<typeof state.days>(state.days, {
-        ...state.days,
-        [action.day]: newDay,
-    });
-
-    const newState = updateObject<typeof state>(state, {
-        ...state,
-        days: newDays,
-    });
+    const newDay = { ...day, exercises: newExercises };
+    const newDays = { ...state.days, [action.day]: newDay };
+    const newState = { ...state, days: newDays };
 
     return newState;
 };
@@ -142,13 +118,13 @@ const modifyExercise = (
     state: typeof initialState,
     action: actionTypes.ModifyExerciseAction,
 ): typeof initialState => {
-    const exerciseId = state.days[action.day]?.exercises?.findIndex(
-        (exercise: IExercise) => {
-            return exercise.id === action.exercise.id;
-        },
-    );
+    const day = state.days[action.day];
 
-    const newExercises = [...state.days[action.day].exercises];
+    const exerciseId = day.exercises.findIndex((exercise: IExercise) => {
+        return exercise.id === action.exercise.id;
+    });
+
+    const newExercises = [...day.exercises];
 
     newExercises[exerciseId] = {
         id: action.exercise.id,
@@ -161,22 +137,9 @@ const modifyExercise = (
         },
     };
 
-    const d = state.days[action.day];
-
-    const newDay = updateObject<typeof d>(d, {
-        ...d,
-        exercises: [...newExercises],
-    });
-
-    const newDays = updateObject<typeof state.days>(state.days, {
-        ...state.days,
-        [action.day]: newDay,
-    });
-
-    const newState = updateObject<typeof state>(state, {
-        ...state,
-        days: newDays,
-    });
+    const newDay = { ...day, exercises: newExercises };
+    const newDays = { ...state.days, [action.day]: newDay };
+    const newState = { ...state, days: newDays };
 
     return newState;
 };
