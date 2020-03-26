@@ -2,7 +2,13 @@ import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { IconButton } from '@material-ui/core';
+import {
+    IconButton,
+    createStyles,
+    WithStyles,
+    withStyles,
+    Theme,
+} from '@material-ui/core';
 
 import { IWorkoutRoutine } from 'types/WorkoutRoutine';
 import { AppState } from 'store/configureStore';
@@ -13,7 +19,14 @@ import Tier from 'components/Tier/Tier';
 import ConfirmRemoveDialog from 'components/ConfirmRemoveDialog/ConfirmRemoveDialog';
 import ExerciseDialog from 'containers/ExerciseDialog/ExerciseDialog';
 
-import styles from './Workout.module.scss';
+import styleClasses from './Workout.module.scss';
+
+const styles = (theme: Theme) =>
+    createStyles({
+        DeleteIcon: {
+            color: theme.palette.warning.main,
+        },
+    });
 
 interface IMapStateToProps {
     day: number;
@@ -27,7 +40,10 @@ interface IMapDispatchToProps {
     onRemoveDay: (day: number) => void;
 }
 
-interface IProps extends IMapStateToProps, IMapDispatchToProps {}
+interface IProps
+    extends IMapStateToProps,
+        IMapDispatchToProps,
+        WithStyles<keyof ReturnType<typeof styles>> {}
 
 const Workout: React.FC<IProps> = ({
     day,
@@ -36,6 +52,7 @@ const Workout: React.FC<IProps> = ({
     onInitDayOne,
     onChangeDay,
     onRemoveDay,
+    classes,
 }: IProps) => {
     // Initialise day 1 if array is empty or undefined - on first launch
     React.useEffect(() => {
@@ -66,7 +83,7 @@ const Workout: React.FC<IProps> = ({
         onChangeDay(newDay);
     };
     return (
-        <div className={styles.Workout}>
+        <div className={styleClasses.Workout}>
             <ConfirmRemoveDialog
                 isOpen={showRemoveDayDialog}
                 setOpen={(value): void => {
@@ -102,7 +119,7 @@ const Workout: React.FC<IProps> = ({
                     setShowRemoveDayDialog(true);
                 }}
             >
-                <DeleteIcon color="primary" />
+                <DeleteIcon className={classes.DeleteIcon} />
             </IconButton>
         </div>
     );
@@ -132,4 +149,6 @@ const mapDispatchToProps = (
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Workout);
+export default withStyles(styles)(
+    connect(mapStateToProps, mapDispatchToProps)(Workout),
+);

@@ -1,10 +1,17 @@
 /* eslint-disable */
 import React from 'react';
-import { withStyles, WithStyles, createStyles, Theme } from '@material-ui/core';
+import {
+    withStyles,
+    WithStyles,
+    createStyles,
+    Theme,
+    createPalette,
+} from '@material-ui/core';
 import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import BurgerMenu from 'components/BurgerMenu/BurgerMenu';
+// import theme from 'shared/theme';
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -17,10 +24,11 @@ const styles = (theme: Theme) =>
         title: {
             flexGrow: 1,
             textAlign: 'right',
+            color: theme.palette.primary.contrastText,
         },
         appBar: {
             top: 'auto',
-            backgroundColor: '#FF5964',
+            backgroundColor: theme.palette.primary.main,
             bottom: 0,
         },
     });

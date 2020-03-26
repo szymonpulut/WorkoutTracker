@@ -19,7 +19,7 @@ const styles = (theme: Theme): ReturnType<typeof createStyles> =>
         },
         RemoveButton: {
             textAlign: 'left',
-            color: 'red',
+            color: theme.palette.warning.main,
         },
     });
 
@@ -64,15 +64,13 @@ const ConfirmRemoveDialog: React.FC<IProps> = ({
                 className={classes.root}
             >
                 <DialogTitle id="form-dialog-title">
-                    {/* eslint-disable-next-line  react/jsx-one-expression-per-line */}
-                    Are you sure you want to remove {additionalDialogText}?
+                    {`Are you sure you want to remove ${additionalDialogText}?`}
                 </DialogTitle>
                 <DialogActions className={classes.DialogActions}>
                     <Button
                         onClick={(): void => {
                             handleClose(true);
                         }}
-                        color="primary"
                         className={classes.RemoveButton}
                     >
                         Remove

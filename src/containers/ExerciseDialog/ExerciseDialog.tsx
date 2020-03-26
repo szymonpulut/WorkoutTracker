@@ -29,7 +29,7 @@ const styles = (theme: Theme): ReturnType<typeof createStyles> =>
         },
         RemoveButton: {
             textAlign: 'left',
-            color: 'red',
+            color: theme.palette.warning.main,
         },
     });
 
