@@ -59,7 +59,7 @@ const TopNavigation: React.FC<IProps> = ({
     const dayTabs = [];
     for (let i = 1; i <= daysCount; i++) {
         const label = `Day ${i}`;
-        dayTabs.push(<Tab value={i} label={label} {...a11yProps(i)} />);
+        dayTabs.push(<Tab value={i} label={label} {...a11yProps(i)} key={i} />);
     }
 
     return (

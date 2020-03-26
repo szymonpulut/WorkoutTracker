@@ -34,7 +34,7 @@ const Tier: React.FC<IProps> = ({
     });
 
     return (
-        <div className={styles.Tier}>
+        <div className={styles.Tier} key={tierNumber}>
             <div className={styles.TierInfo}>
                 <h3 className={styles.TierName}>
                     <IconButton
@@ -51,6 +51,7 @@ const Tier: React.FC<IProps> = ({
             {thisTierExercises?.map((exercise) => {
                 return (
                     <Exercise
+                        key={exercise.id}
                         exerciseId={exercise.id}
                         name={exercise.type.name}
                         day={day}

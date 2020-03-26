@@ -1,7 +1,7 @@
 import { createStore, compose, combineReducers } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import localStorage from 'redux-persist/lib/storage';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import autoMergeLevel1 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
 import workoutReducer from 'store/reducers/workout';
 import systemReducer from 'store/reducers/system';
@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
     key: 'root',
     storage: localStorage,
-    stateReconciler: autoMergeLevel2,
+    stateReconciler: autoMergeLevel1,
 };
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
