@@ -7,7 +7,11 @@ export interface IWorkoutState {
     days: IWorkoutRoutine;
 }
 
-const initialState: IWorkoutState = { day: 0, daysCount: 0, days: [] };
+const initialState: IWorkoutState = {
+    day: 1,
+    daysCount: 1,
+    days: { 1: { id: 1, day: 1, exercises: [] } },
+};
 
 const changeDay = (
     state: typeof initialState,

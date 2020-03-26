@@ -13,6 +13,8 @@ export const CHANGE_DAY = 'CHANGE_DAY';
 export const DIALOG_TOGGLE = 'DIALOG_TOGGLE';
 export const DIALOG_TOGGLE_MODIFY = 'DIALOG_TOGGLE_MODIFY';
 
+export const CLEAR_STORAGE = 'CLEAR_STORAGE';
+
 export interface DialogToggleAction {
     type: typeof DIALOG_TOGGLE;
     value?: boolean;
@@ -64,6 +66,10 @@ export interface RemoveDayAction {
     day: number;
 }
 
+export interface ClearStorageAction {
+    type: typeof CLEAR_STORAGE;
+}
+
 export type ExerciseActionTypes =
     | AddNewExerciseAction
     | ModifyExerciseAction
@@ -77,7 +83,10 @@ export type DayActionTypes =
 
 export type DialogActionTypes = DialogToggleModifyAction | DialogToggleAction;
 
+export type SystemActionTypes = ClearStorageAction;
+
 export type AppActions =
     | DayActionTypes
     | ExerciseActionTypes
-    | DialogActionTypes;
+    | DialogActionTypes
+    | SystemActionTypes;

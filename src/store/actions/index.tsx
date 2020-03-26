@@ -7,4 +7,4 @@ export {
     addDay,
     removeDay,
 } from './workout';
-export { toggleDialog, toggleDialogModify } from './system';
+export { toggleDialog, toggleDialogModify, clearStorage } from './system';

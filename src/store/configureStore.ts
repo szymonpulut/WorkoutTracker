@@ -6,6 +6,8 @@ import autoMergeLevel1 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import workoutReducer from 'store/reducers/workout';
 import systemReducer from 'store/reducers/system';
 
+import * as actionTypes from 'types/actions';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const composeEnhancers =
     (process.env.NODE_ENV === 'development'
@@ -14,10 +16,22 @@ const composeEnhancers =
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const rootReducer = combineReducers({
+const allReducers = combineReducers({
     workout: workoutReducer,
     system: systemReducer,
-} as any);
+} as any) as any;
+
+const rootReducer = (
+    state: any,
+    action: any,
+): ReturnType<typeof allReducers> => {
+    if (action.type === actionTypes.CLEAR_STORAGE) {
+        // eslint-disable-next-line no-param-reassign
+        state = undefined;
+    }
+
+    return allReducers(state, action);
+};
 /* eslint-enable @typescript-eslint/no-explicit-any */
 
 const persistConfig = {

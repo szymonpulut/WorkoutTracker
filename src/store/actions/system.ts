@@ -27,3 +27,9 @@ export const toggleDialogModify = (
         id,
     };
 };
+
+export const clearStorage = (): actionTypes.AppActions => {
+    return {
+        type: actionTypes.CLEAR_STORAGE,
+    };
+};
