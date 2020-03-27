@@ -12,7 +12,7 @@ import * as actions from 'store/actions';
 
 import Tier from 'components/Tier/Tier';
 import ConfirmRemoveDialog from 'components/ConfirmRemoveDialog/ConfirmRemoveDialog';
-import ExerciseDialog from 'containers/ExerciseDialog/ExerciseDialog';
+import ExerciseDialogWrapper from 'containers/ExerciseDialogWrapper/ExerciseDialogWrapper';
 
 import styles from './WorkoutStyles';
 
@@ -43,12 +43,13 @@ const Workout: React.FC<IProps> = ({
     classes,
 }: IProps) => {
     // Initialise day 1 if array is empty or undefined - on first launch
+    const firstDay = days[1];
     React.useEffect(() => {
-        if (days[1] === undefined) {
+        if (firstDay === undefined) {
             onInitDayOne();
-            onChangeDay(daysCount + 1);
+            onChangeDay(1);
         }
-    }, []);
+    }, [firstDay]);
 
     const currentDayRoutine = days[day];
 
@@ -80,8 +81,7 @@ const Workout: React.FC<IProps> = ({
                 handleRemove={handleRemoveDay}
                 removedType="day"
             />
-            <ExerciseDialog day={day} />
-
+            <ExerciseDialogWrapper day={day} />
             <Tier
                 day={day}
                 tierNumber={1}
