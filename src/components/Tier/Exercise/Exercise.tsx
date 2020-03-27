@@ -1,19 +1,13 @@
 import React from 'react';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 
-import { Chip, withStyles, WithStyles, createStyles } from '@material-ui/core';
+import { Chip, withStyles, WithStyles } from '@material-ui/core';
 
 import * as actions from 'store/actions';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { AppActions } from 'types/actions';
 
-const styles = (): ReturnType<typeof createStyles> =>
-    createStyles({
-        chip: {
-            width: '90%',
-            marginTop: '5px',
-        },
-    });
+import styles from './ExerciseStyles';
 
 interface IMapDispatchToProps {
     onToggleDialogModify: (day: number, exerciseId: number) => void;

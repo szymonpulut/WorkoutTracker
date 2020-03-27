@@ -10,7 +10,7 @@ import { store, persistor } from 'store/configureStore';
 
 import App from 'containers/App';
 import * as serviceWorker from 'serviceWorker';
-import { ThemeProvider, MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>

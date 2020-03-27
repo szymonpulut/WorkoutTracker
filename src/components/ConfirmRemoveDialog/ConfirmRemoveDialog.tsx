@@ -3,25 +3,13 @@ import React from 'react';
 import {
     withStyles,
     WithStyles,
-    createStyles,
-    Theme,
     Button,
     Dialog,
     DialogActions,
     DialogTitle,
 } from '@material-ui/core';
 
-const styles = (theme: Theme): ReturnType<typeof createStyles> =>
-    createStyles({
-        root: {},
-        DialogActions: {
-            margin: theme.spacing(1),
-        },
-        RemoveButton: {
-            textAlign: 'left',
-            color: theme.palette.warning.main,
-        },
-    });
+import styles from './ConfirmRemoveDialogStyles';
 
 interface IProps extends WithStyles<keyof ReturnType<typeof styles>> {
     handleRemove: () => void;
@@ -54,38 +42,35 @@ const ConfirmRemoveDialog: React.FC<IProps> = ({
     }
 
     return (
-        <div>
-            <Dialog
-                open={isOpen}
-                onClose={(): void => {
-                    handleClose(false);
-                }}
-                aria-labelledby="form-dialog-title"
-                className={classes.root}
-            >
-                <DialogTitle id="form-dialog-title">
-                    {`Are you sure you want to remove ${additionalDialogText}?`}
-                </DialogTitle>
-                <DialogActions className={classes.DialogActions}>
-                    <Button
-                        onClick={(): void => {
-                            handleClose(true);
-                        }}
-                        className={classes.RemoveButton}
-                    >
-                        Remove
-                    </Button>
-                    <Button
-                        onClick={(): void => {
-                            handleClose(false);
-                        }}
-                        color="primary"
-                    >
-                        Cancel
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+        <Dialog
+            open={isOpen}
+            onClose={(): void => {
+                handleClose(false);
+            }}
+            aria-labelledby="form-dialog-title"
+        >
+            <DialogTitle id="form-dialog-title">
+                {`Are you sure you want to remove ${additionalDialogText}?`}
+            </DialogTitle>
+            <DialogActions className={classes.DialogActions}>
+                <Button
+                    onClick={(): void => {
+                        handleClose(true);
+                    }}
+                    className={classes.RemoveButton}
+                >
+                    Remove
+                </Button>
+                <Button
+                    onClick={(): void => {
+                        handleClose(false);
+                    }}
+                    color="primary"
+                >
+                    Cancel
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 };
 

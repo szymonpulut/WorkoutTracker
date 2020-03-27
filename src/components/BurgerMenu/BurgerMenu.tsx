@@ -2,11 +2,11 @@ import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import { AppActions } from 'types/actions';
-import * as actions from 'store/actions';
-
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import { AppActions } from 'types/actions';
+import * as actions from 'store/actions';
 
 interface IMapDispatchToProps {
     onClearAppData: () => void;

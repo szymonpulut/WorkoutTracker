@@ -3,19 +3,21 @@ import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
+import {
+    withStyles,
+    WithStyles,
+    AppBar,
+    Tabs,
+    Tab,
+    IconButton,
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+
 import { AppActions } from 'types/actions';
 import * as actions from 'store/actions';
-
-import { withStyles, WithStyles, Theme } from '@material-ui/core';
-import { AppBar, Tabs, Tab, IconButton } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
 import { AppState } from 'store/configureStore';
 
-const styles = () => ({
-    root: {
-        width: '100%',
-    },
-});
+import styles from './TopNavigationStyles';
 
 interface IMapDispatchToProps {
     onChangeDay: (day: number) => void;

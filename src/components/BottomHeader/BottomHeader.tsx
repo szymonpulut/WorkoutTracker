@@ -1,37 +1,18 @@
-/* eslint-disable */
 import React from 'react';
+
 import {
     withStyles,
     WithStyles,
-    createStyles,
-    Theme,
-    createPalette,
+    AppBar,
+    Toolbar,
+    Typography,
+    IconButton,
 } from '@material-ui/core';
-import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import BurgerMenu from 'components/BurgerMenu/BurgerMenu';
-// import theme from 'shared/theme';
 
-const styles = (theme: Theme) =>
-    createStyles({
-        root: {
-            bottom: 0,
-        },
-        menuButton: {
-            marginRight: theme.spacing(1),
-        },
-        title: {
-            flexGrow: 1,
-            textAlign: 'right',
-            color: theme.palette.primary.contrastText,
-        },
-        appBar: {
-            top: 'auto',
-            backgroundColor: theme.palette.primary.main,
-            bottom: 0,
-        },
-    });
+import styles from './BottomHeaderStyles';
 
 interface IProps extends WithStyles<keyof ReturnType<typeof styles>> {}
 
@@ -40,11 +21,13 @@ const BottomHeader: React.FC<IProps> = ({ classes }: IProps) => {
         null,
     );
 
-    const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleMenuClick = (
+        event: React.MouseEvent<HTMLButtonElement>,
+    ): void => {
         setMenuAnchorEl(event.currentTarget);
     };
 
-    const handleMenuClose = () => {
+    const handleMenuClose = (): void => {
         setMenuAnchorEl(null);
     };
 

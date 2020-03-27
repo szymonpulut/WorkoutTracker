@@ -10,8 +10,6 @@ import { AppActions } from 'types/actions';
 import {
     withStyles,
     WithStyles,
-    createStyles,
-    Theme,
     Button,
     TextField,
     Dialog,
@@ -21,17 +19,7 @@ import {
 } from '@material-ui/core';
 import ConfirmRemoveDialog from 'components/ConfirmRemoveDialog/ConfirmRemoveDialog';
 
-const styles = (theme: Theme): ReturnType<typeof createStyles> =>
-    createStyles({
-        root: {},
-        DialogActions: {
-            margin: theme.spacing(1),
-        },
-        RemoveButton: {
-            textAlign: 'left',
-            color: theme.palette.warning.main,
-        },
-    });
+import styles from './ExerciseDialogStyles';
 
 interface IMapStateToProps {
     days: IWorkoutRoutine;

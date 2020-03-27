@@ -1,15 +1,19 @@
 import React from 'react';
 
+import { WithStyles, withStyles } from '@material-ui/core';
+
 import Layout from 'components/Layout/Layout';
 
-import styles from './App.module.scss';
+import styles from './AppStyles';
 
-const App: React.FC = () => {
+interface IProps extends WithStyles<keyof ReturnType<typeof styles>> {}
+
+const App: React.FC<IProps> = ({ classes }: IProps) => {
     return (
-        <div className={styles.App}>
+        <div className={classes.App}>
             <Layout />
         </div>
     );
 };
 
-export default App;
+export default withStyles(styles)(App);

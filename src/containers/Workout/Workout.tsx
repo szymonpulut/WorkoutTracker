@@ -1,14 +1,9 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+
+import { IconButton, WithStyles, withStyles } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {
-    IconButton,
-    createStyles,
-    WithStyles,
-    withStyles,
-    Theme,
-} from '@material-ui/core';
 
 import { IWorkoutRoutine } from 'types/WorkoutRoutine';
 import { AppState } from 'store/configureStore';
@@ -19,14 +14,7 @@ import Tier from 'components/Tier/Tier';
 import ConfirmRemoveDialog from 'components/ConfirmRemoveDialog/ConfirmRemoveDialog';
 import ExerciseDialog from 'containers/ExerciseDialog/ExerciseDialog';
 
-import styleClasses from './Workout.module.scss';
-
-const styles = (theme: Theme) =>
-    createStyles({
-        DeleteIcon: {
-            color: theme.palette.warning.main,
-        },
-    });
+import styles from './WorkoutStyles';
 
 interface IMapStateToProps {
     day: number;
@@ -83,7 +71,7 @@ const Workout: React.FC<IProps> = ({
         onChangeDay(newDay);
     };
     return (
-        <div className={styleClasses.Workout}>
+        <div className={classes.Workout}>
             <ConfirmRemoveDialog
                 isOpen={showRemoveDayDialog}
                 setOpen={(value): void => {
