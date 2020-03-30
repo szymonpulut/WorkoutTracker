@@ -20,6 +20,7 @@ interface IMapStateToProps {
     day: number;
     days: IWorkoutRoutine;
     daysCount: number;
+    showExerciseDialog: boolean;
 }
 
 interface IMapDispatchToProps {
@@ -40,6 +41,7 @@ const Workout: React.FC<IProps> = ({
     onInitDayOne,
     onChangeDay,
     onRemoveDay,
+    showExerciseDialog,
     classes,
 }: IProps) => {
     // Initialise day 1 if array is empty or undefined - on first launch
@@ -71,17 +73,26 @@ const Workout: React.FC<IProps> = ({
         onRemoveDay(day);
         onChangeDay(newDay);
     };
+
+    const confirmRemoveDialog = showRemoveDayDialog ? (
+        <ConfirmRemoveDialog
+            isOpen={showRemoveDayDialog}
+            setOpen={(value): void => {
+                setShowRemoveDayDialog(value);
+            }}
+            handleRemove={handleRemoveDay}
+            removedType="day"
+        />
+    ) : null;
+
+    const exerciseDialogWrapper = showExerciseDialog ? (
+        <ExerciseDialogWrapper day={day} />
+    ) : null;
+
     return (
         <div className={classes.Workout}>
-            <ConfirmRemoveDialog
-                isOpen={showRemoveDayDialog}
-                setOpen={(value): void => {
-                    setShowRemoveDayDialog(value);
-                }}
-                handleRemove={handleRemoveDay}
-                removedType="day"
-            />
-            <ExerciseDialogWrapper day={day} />
+            {confirmRemoveDialog}
+            {exerciseDialogWrapper}
             <Tier
                 day={day}
                 tierNumber={1}
@@ -118,6 +129,7 @@ const mapStateToProps = (state: AppState): IMapStateToProps => {
         day: state.workout.day,
         daysCount: state.workout.daysCount,
         days: state.workout.days,
+        showExerciseDialog: state.system.dialogOpen,
     };
 };
 

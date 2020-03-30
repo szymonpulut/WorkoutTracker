@@ -78,21 +78,9 @@ const addNewExercise = (
     state: typeof initialState,
     action: actionTypes.AddNewExerciseAction,
 ): typeof initialState => {
-    let newExercises: IExercise[];
     const day = state.days[action.day];
-    const exerciseId = day.exercises.findIndex((exercise) => {
-        return exercise.id === action.exercise.id;
-    });
-
-    if (exerciseId !== -1) {
-        newExercises = [
-            ...day.exercises.slice(0, exerciseId),
-            action.exercise,
-            ...day.exercises.slice(exerciseId + 1),
-        ];
-    } else {
-        newExercises = day.exercises.concat([action.exercise]);
-    }
+    const newExercises: IExercise[] = [...day.exercises];
+    newExercises[action.exercise.id] = action.exercise;
 
     const newDay = { ...day, exercises: newExercises };
     const newDays = { ...state.days, [action.day]: newDay };

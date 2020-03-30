@@ -84,8 +84,6 @@ const ExerciseDialogWrapper: React.FC<IProps> = ({
         return 0;
     };
 
-    const exerciseId = getExerciseId();
-
     const handleFormChange = (
         event: React.ChangeEvent<HTMLInputElement>,
         stateId: string,
@@ -131,6 +129,8 @@ const ExerciseDialogWrapper: React.FC<IProps> = ({
         onDialogToggle(false);
 
         if (success) {
+            const exerciseId = getExerciseId();
+
             let tempTier = 0;
             if (formData.tier === 0) {
                 tempTier = dialogOpenExercise.tier;
